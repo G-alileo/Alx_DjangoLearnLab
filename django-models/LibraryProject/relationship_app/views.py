@@ -7,6 +7,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from relationship_app.decorator import role_required
 
 # Create your views here.
 
@@ -37,3 +39,27 @@ def register(request):
         form = UserCreationForm()
     
     return render(request, "relationship_app/register.html", {"form": form})
+
+@login_required
+@role_required('ADMIN')
+def admin_view(request):
+    return render(request, 'admin_dashboard.html', {
+        'title': 'Admin Dashboard',
+        'content': 'Welcome to the Admin Dashboard'
+    })
+
+@login_required
+@role_required('LIBRARIAN')
+def librarian_view(request):
+    return render(request, 'librarian_dashboard.html', {
+        'title': 'Librarian Dashboard',
+        'content': 'Welcome to the Librarian Dashboard'
+    })
+
+@login_required
+@role_required('MEMBER')
+def member_view(request):
+    return render(request, 'member_dashboard.html', {
+        'title': 'Member Dashboard',
+        'content': 'Welcome to the Member Dashboard'
+    })
