@@ -1,5 +1,5 @@
 from django.urls import path
-from relationship_app.views import list_books, LibraryDetailView
+from .views import list_books, LibraryDetailView
 from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 from relationship_app.view.admin_view import admin_dashboard
