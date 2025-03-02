@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('relationship_app.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('dashboard/', include('relationship_app.urls')),
+    path('bookshelf/', include('bookshelf.urls')),
 ]
