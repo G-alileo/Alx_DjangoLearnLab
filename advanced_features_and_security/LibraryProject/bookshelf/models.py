@@ -10,9 +10,6 @@ class Book(models.Model):
     def __str__(self):
         return self.title, self.author, self.publication_year
     
-
-
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
