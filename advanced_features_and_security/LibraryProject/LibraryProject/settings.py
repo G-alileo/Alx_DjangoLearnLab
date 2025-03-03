@@ -29,22 +29,23 @@ ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']
 
 
 # Security headers
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'  
-SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True      # XSS filter enables browser built-in filters to detect and block XSS attacks
+X_FRAME_OPTIONS = 'DENY'              # X-Frame-Options header prevents clickjacking attacks by not allowing site embedding
+SECURE_CONTENT_TYPE_NOSNIFF = True    # Content-Type-Options header prevents MIME type sniffing
 
 
-# HTTPS configurations
-SECURE_SSL_REDIRECT = True
+# HTTPS configurations.HTTPS settings enforce secure connections
+SECURE_SSL_REDIRECT = True       # Redirect all HTTP requests to HTTPS
+# HSTS settings tell browsers to only use HTTPS for this domain
 SECURE_HSTS_SECONDS = 31536000 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Secure cookies
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_HTTPONLY = True
+# Secure cookies.Cookie settings ensure sensitive cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True     # Ensures session cookies sent only via HTTPS
+CSRF_COOKIE_SECURE = True        # Ensures CSRF cookies sent only via HTTPS
+SESSION_COOKIE_HTTPONLY = True   # Prevents JavaScript access to session cookies
+CSRF_COOKIE_HTTPONLY = True      # Prevents JavaScript access to CSRF cookies
 
 
 # Application definition
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'csp.middleware.CSPMiddleware',  # Addition of CSP middleware 
+    'csp.middleware.CSPMiddleware',    # Addition of CSP middleware 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
