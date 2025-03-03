@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .models import Book
-from .forms import BookForm, ExampleForm
+from .forms import ExampleForm, BookForm
 
 
 # Create your views here.
