@@ -2,12 +2,22 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.core.exceptions import ValidationError
 from .models import Book
-from .forms import BookForm 
+from .forms import BookForm, ExampleForm
 
 
 # Create your views here.
+def form_example(request):
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process form data here
+            return redirect('book_list')
+    else:
+        form = ExampleForm()
+    
+    return render(request, 'bookshelf/form_example.html', {'form': form})
+
 # Read operation 
 @permission_required('bookshelf.can_view', raise_exception=True)
 def book_list(request):
