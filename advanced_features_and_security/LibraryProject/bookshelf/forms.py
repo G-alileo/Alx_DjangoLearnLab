@@ -3,6 +3,18 @@ from .models import Book
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 
+
+class ExampleForm(forms.Form):
+    name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(required=True)
+    message = forms.CharField(widget=forms.Textarea)
+    
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if len(name) < 2:
+            raise forms.ValidationError("Name must be at least 2 characters long")
+        return name
+    
 class BookForm(forms.ModelForm):
     # Add validators explicitly for each field
     title = forms.CharField(
@@ -31,7 +43,7 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'author', 'publication_year']
-        
+
     # Custom validation for title field
     def clean_title(self):
         title = self.cleaned_data.get('title')
