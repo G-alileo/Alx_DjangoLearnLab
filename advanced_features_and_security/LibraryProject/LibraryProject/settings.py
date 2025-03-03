@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(l@%p&^+nanhmko+3l3pspvy=r_k+4kxr@(70nl50ccon=$im0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000', 'http://localhost:8000','127.0.0.1']
+import os
 
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8000", "http://localhost:8000"]
 
 # Security headers
 SECURE_BROWSER_XSS_FILTER = True      # XSS filter enables browser built-in filters to detect and block XSS attacks
@@ -35,17 +37,31 @@ SECURE_CONTENT_TYPE_NOSNIFF = True    # Content-Type-Options header prevents MIM
 
 
 # HTTPS configurations.HTTPS settings enforce secure connections
-SECURE_SSL_REDIRECT = False       # Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True       # Redirect all HTTP requests to HTTPS
 # HSTS settings tell browsers to only use HTTPS for this domain
-SECURE_HSTS_SECONDS = 31536000 
+SECURE_HSTS_SECONDS = 31536000   # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+
 # Secure cookies.Cookie settings ensure sensitive cookies are only sent over HTTPS
-SESSION_COOKIE_SECURE = False     # Ensures session cookies sent only via HTTPS
-CSRF_COOKIE_SECURE = False       # Ensures CSRF cookies sent only via HTTPS
+SESSION_COOKIE_SECURE = True     # Ensures session cookies sent only via HTTPS
+CSRF_COOKIE_SECURE = True        # Ensures CSRF cookies sent only via HTTPS
 SESSION_COOKIE_HTTPONLY = True   # Prevents JavaScript access to session cookies
 CSRF_COOKIE_HTTPONLY = True      # Prevents JavaScript access to CSRF cookies
+
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+
+# Content Security Policy settings 
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+CSP_FONT_SRC = ("'self'",)
 
 
 # Application definition
@@ -74,12 +90,6 @@ MIDDLEWARE = [
     'csp.middleware.CSPMiddleware',    # Addition of CSP middleware 
 ]
 
-# Content Security Policy settings 
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
-CSP_SCRIPT_SRC = ("'self'",)
-CSP_IMG_SRC = ("'self'",)
-CSP_FONT_SRC = ("'self'",)
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
@@ -147,7 +157,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 STATIC_URL = '/static/'
+
+# Absolute path where collectstatic will store static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Additional directories where Django will look for static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
