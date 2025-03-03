@@ -1,34 +1,29 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book List</title>
 </head>
 <body>
     <h1>Book List</h1>
-
-    {% if perms.bookshelf.can_create %}
-        <a href="{% url 'book_create' %}">Add New Book</a>
-    {% endif %}
-
+    
+    <form method="get" action="">
+        {% csrf_token %}
+        <input type="text" name="search" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+    
     <ul>
         {% for book in books %}
             <li>
                 {{ book.title }} by {{ book.author }} ({{ book.publication_year }})
-                
-                {% if perms.bookshelf.can_edit %}
-                    <a href="{% url 'book_edit' book.id %}">Edit</a>
-                {% endif %}
-                
-                {% if perms.bookshelf.can_delete %}
-                    <a href="{% url 'book_delete' book.id %}">Delete</a>
-                {% endif %}
+                <a href="{% url 'book_edit' book.id %}">Edit</a>
+                <a href="{% url 'book_delete' book.id %}">Delete</a>
             </li>
         {% empty %}
-            <p>No books available.</p>
+            <li>No books found.</li>
         {% endfor %}
     </ul>
+    
+    <a href="{% url 'book_create' %}">Add New Book</a>
 </body>
 </html>
