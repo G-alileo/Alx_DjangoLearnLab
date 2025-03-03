@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(l@%p&^+nanhmko+3l3pspvy=r_k+4kxr@(70nl50ccon=$im0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']
+ALLOWED_HOSTS = ['http://127.0.0.1:8000', 'http://localhost:8000','127.0.0.1']
 
 
 # Security headers
@@ -35,15 +35,15 @@ SECURE_CONTENT_TYPE_NOSNIFF = True    # Content-Type-Options header prevents MIM
 
 
 # HTTPS configurations.HTTPS settings enforce secure connections
-SECURE_SSL_REDIRECT = True       # Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = False       # Redirect all HTTP requests to HTTPS
 # HSTS settings tell browsers to only use HTTPS for this domain
 SECURE_HSTS_SECONDS = 31536000 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
 # Secure cookies.Cookie settings ensure sensitive cookies are only sent over HTTPS
-SESSION_COOKIE_SECURE = True     # Ensures session cookies sent only via HTTPS
-CSRF_COOKIE_SECURE = True        # Ensures CSRF cookies sent only via HTTPS
+SESSION_COOKIE_SECURE = False     # Ensures session cookies sent only via HTTPS
+CSRF_COOKIE_SECURE = False       # Ensures CSRF cookies sent only via HTTPS
 SESSION_COOKIE_HTTPONLY = True   # Prevents JavaScript access to session cookies
 CSRF_COOKIE_HTTPONLY = True      # Prevents JavaScript access to CSRF cookies
 
@@ -68,10 +68,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'csp.middleware.CSPMiddleware',    # Addition of CSP middleware 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',    # Addition of CSP middleware 
 ]
 
 # Content Security Policy settings 
@@ -147,10 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
