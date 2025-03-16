@@ -8,6 +8,7 @@ API Features: Filtering, Searching, and Ordering
 
 ## Searching:
 - Search books by title or author: `?search=magic`
+- EX: `http://127.0.0.1:8000/api/books/?search=silent`
 
 ## Ordering:
 - Order by title: `?ordering=title`
