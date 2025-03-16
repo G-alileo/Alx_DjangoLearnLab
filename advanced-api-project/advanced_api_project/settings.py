@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_filters',
     'api.apps.ApiConfig',
     'rest_framework',
     'django.contrib.admin',
@@ -53,13 +52,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'advanced_api_project.urls'
-
-
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ]
-}
 
 TEMPLATES = [
     {
