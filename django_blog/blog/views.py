@@ -120,6 +120,15 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.kwargs['post_id']})
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get('pk')  # Use .get() to avoid KeyError
+        if pk:
+            context['post'] = get_object_or_404(Post, pk=pk)
+        else:
+            raise ValueError("Post 'pk' is missing in the URL pattern.")
+        return context
+    
 # Edit a comment (only the author can edit)
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment

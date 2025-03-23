@@ -12,7 +12,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('post/', views.posts, name='posts'),
     
-    
     path('posts/', PostListView.as_view(), name='post-list'),  # List all posts
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),  # View a single post
     path('post/new/', PostCreateView.as_view(), name='post-create'),  # Create a new post
@@ -20,7 +19,8 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),  # Delete a post
 
     # Comment URLs
-    path('post/<int:post_id>/comment/new/', CommentCreateView.as_view(), name='comment-add'),
+    path('post/<int:pk>/comment/new/', CommentCreateView.as_view(), name='comment-create'),
+    # path('post/<int:post_id>/comment/new/', CommentCreateView.as_view(), name='comment-add'),
     path('comment/<int:pk>/edit/', CommentUpdateView.as_view(), name='comment-edit'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
 ]
