@@ -31,7 +31,7 @@
     <!-- Add Comment Form -->
     {% if user.is_authenticated %}
         <h4>Leave a Comment:</h4>
-        <form method="POST" action="{% url 'comment-add' post.id %}">
+        <form method="POST" action="{% url 'comment-create' post.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Post Comment</button>
