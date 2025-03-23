@@ -56,7 +56,7 @@ ROOT_URLCONF = 'django_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR /'blog'/ 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +121,7 @@ STATIC_URL = '/static/'
 
 # configuring django to find my static files
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR /"blog"/ "static",
 ]
 
 
