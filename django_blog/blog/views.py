@@ -159,15 +159,34 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.post.id})
     
- # View for filtering posts by tag
-def posts_by_tag(request, tag_name):
-    posts = Post.objects.filter(tags__name__icontains=tag_name)
-    return render(request, 'blog/post_list.html', {'posts': posts, 'tag_name': tag_name})
+class PostsByTagView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
 
-# Search functionality
-def search_posts(request):
-    query = request.GET.get('q')
-    results = Post.objects.filter(
-        Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
-    ).distinct()
-    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+    def get_queryset(self):
+        tag_name = self.kwargs.get('tag_name')
+        return Post.objects.filter(tags__name__icontains=tag_name)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag_name'] = self.kwargs.get('tag_name')  # Pass tag name to template
+        return context
+    
+class SearchPostsView(ListView):
+    model = Post
+    template_name = 'blog/search_results.html'
+    context_object_name = 'results'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+            ).distinct()
+        return Post.objects.none()  # Return empty queryset if no query is provided
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        return context
