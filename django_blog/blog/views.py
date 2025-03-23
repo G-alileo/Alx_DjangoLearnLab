@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Comment
 from .forms import CommentForm
+from django.db.models import Q
 
 
 # Create your views here.
@@ -157,3 +158,16 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.post.id})
+    
+ # View for filtering posts by tag
+def posts_by_tag(request, tag_name):
+    posts = Post.objects.filter(tags__name__icontains=tag_name)
+    return render(request, 'blog/post_list.html', {'posts': posts, 'tag_name': tag_name})
+
+# Search functionality
+def search_posts(request):
+    query = request.GET.get('q')
+    results = Post.objects.filter(
+        Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+    ).distinct()
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
