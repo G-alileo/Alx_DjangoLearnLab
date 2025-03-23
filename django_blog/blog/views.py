@@ -60,6 +60,9 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']  # Show latest posts first
 
+    def get_queryset(self):
+        return Post.objects.all()  # Future improvement: Add filtering logic here
+
 # Show a single post (publicly accessible)
 class PostDetailView(DetailView):
     model = Post
