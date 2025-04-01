@@ -48,7 +48,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def follow_user(request, user_id):
-    user_to_follow = get_object_or_404(CustomUser, id=user_id)
+    user_to_follow = get_object_or_404(CustomUser.objects.all(), id=user_id)
 
     if request.user == user_to_follow:
         return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
@@ -59,7 +59,7 @@ def follow_user(request, user_id):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def unfollow_user(request, user_id):
-    user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
+    user_to_unfollow = get_object_or_404(CustomUser.objects.all(), id=user_id)
 
     if request.user == user_to_unfollow:
         return Response({"error": "You cannot unfollow yourself."}, status=status.HTTP_400_BAD_REQUEST)
