@@ -77,7 +77,7 @@ python manage.py runserver
 | Method | Endpoint           | Description              |
 | ------ | ------------------ | ------------------------ |
 | GET    | `http://127.0.0.1:8000/accounts/profile/`        | Get current user profile |
-| PUT    | `http://127.0.0.1:8000/accounts/profile/update/` | Update user profile      |
+| PUT    | `http://127.0.0.1:8000/accounts/profile/`        | Update user profile      |
 
 ### Posts
 
@@ -93,8 +93,8 @@ python manage.py runserver
 
 | Method | Endpoint                | Description                    |
 | ------ | ----------------------- | ------------------------------ |
-| GET    | `http://127.0.0.1:8000/api/posts/{id}/comments/` | List comments for a post       |
-| POST   | `http://127.0.0.1:8000/api/posts/{id}/comments/` | Add a comment to a post        |
+| GET    | `http://127.0.0.1:8000/api/comments/` | List comments for a post       |
+| POST   | `http://127.0.0.1:8000/api/comments/` | Add a comment to a post   // pass post id in the post field in the body to add comment to that specific post     |
 | PUT    | `http://127.0.0.1:8000/api/comments/{id}/`       | Edit a comment (author only)   |
 | DELETE | `http://127.0.0.1:8000/api/comments/{id}/`       | Delete a comment (author only) |
 
@@ -102,8 +102,8 @@ python manage.py runserver
 
 | Method | Endpoint              | Description   |
 | ------ | --------------------- | ------------- |
-| POST   | `http://127.0.0.1:8000/api/posts/{id}/like/`   | Like a post   |
-| POST   | `http://127.0.0.1:8000/api/posts/{id}/unlike/` | Unlike a post |
+| POST   | `http://127.0.0.1:8000/api/{id}/like/`   | Like a post   |
+| POST   | `http://127.0.0.1:8000/api/{id}/unlike/` | Unlike a post |
 
 ### Following System
 
