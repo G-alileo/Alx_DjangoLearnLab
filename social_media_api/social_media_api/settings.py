@@ -33,6 +33,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    'notifications',
     'posts',
     'rest_framework',
     'rest_framework.authtoken',
