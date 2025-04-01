@@ -69,60 +69,60 @@ python manage.py runserver
 
 | Method | Endpoint     | Description                         |
 | ------ | ------------ | ----------------------------------- |
-| POST   | `/register/` | Register a new user                 |
-| POST   | `/login/`    | Log in and get authentication token |
+| POST   | `http://127.0.0.1:8000/accounts/register/` | Register a new user                 |
+| POST   | `http://127.0.0.1:8000/accounts/login/`    | Log in and get authentication token |
 
 ### User Profile
 
 | Method | Endpoint           | Description              |
 | ------ | ------------------ | ------------------------ |
-| GET    | `/profile/`        | Get current user profile |
-| PUT    | `/profile/update/` | Update user profile      |
+| GET    | `http://127.0.0.1:8000/accounts/profile/`        | Get current user profile |
+| PUT    | `http://127.0.0.1:8000/accounts/profile/update/` | Update user profile      |
 
 ### Posts
 
 | Method | Endpoint       | Description                 |
 | ------ | -------------- | --------------------------- |
-| GET    | `/posts/`      | List all posts              |
-| POST   | `/posts/`      | Create a new post           |
-| GET    | `/posts/{id}/` | Retrieve a post             |
-| PUT    | `/posts/{id}/` | Update a post (author only) |
-| DELETE | `/posts/{id}/` | Delete a post (author only) |
+| GET    | `http://127.0.0.1:8000/api/posts/`      | List all posts              |
+| POST   | `http://127.0.0.1:8000/api/posts/`      | Create a new post           |
+| GET    | `http://127.0.0.1:8000/api/posts/{id}/` | Retrieve a post             |
+| PUT    | `http://127.0.0.1:8000/api/posts/{id}/` | Update a post (author only) |
+| DELETE | `http://127.0.0.1:8000/api/posts/{id}/` | Delete a post (author only) |
 
 ### Comments
 
 | Method | Endpoint                | Description                    |
 | ------ | ----------------------- | ------------------------------ |
-| GET    | `/posts/{id}/comments/` | List comments for a post       |
-| POST   | `/posts/{id}/comments/` | Add a comment to a post        |
-| PUT    | `/comments/{id}/`       | Edit a comment (author only)   |
-| DELETE | `/comments/{id}/`       | Delete a comment (author only) |
+| GET    | `http://127.0.0.1:8000/api/posts/{id}/comments/` | List comments for a post       |
+| POST   | `http://127.0.0.1:8000/api/posts/{id}/comments/` | Add a comment to a post        |
+| PUT    | `http://127.0.0.1:8000/api/comments/{id}/`       | Edit a comment (author only)   |
+| DELETE | `http://127.0.0.1:8000/api/comments/{id}/`       | Delete a comment (author only) |
 
 ### Likes
 
 | Method | Endpoint              | Description   |
 | ------ | --------------------- | ------------- |
-| POST   | `/posts/{id}/like/`   | Like a post   |
-| POST   | `/posts/{id}/unlike/` | Unlike a post |
+| POST   | `http://127.0.0.1:8000/api/posts/{id}/like/`   | Like a post   |
+| POST   | `http://127.0.0.1:8000/api/posts/{id}/unlike/` | Unlike a post |
 
 ### Following System
 
 | Method | Endpoint               | Description     |
 | ------ | ---------------------- | --------------- |
-| POST   | `/follow/{user_id}/`   | Follow a user   |
-| POST   | `/unfollow/{user_id}/` | Unfollow a user |
+| POST   | `http://127.0.0.1:8000/accounts/follow/{user_id}/`   | Follow a user   |
+| POST   | `http://127.0.0.1:8000/accounts/unfollow/{user_id}/` | Unfollow a user |
 
 ### Personalized Feed
 
 | Method | Endpoint | Description                   |
 | ------ | -------- | ----------------------------- |
-| GET    | `/feed/` | Get posts from followed users |
+| GET    | `http://127.0.0.1:8000/api/feed/` | Get posts from followed users |
 
 ### Notifications
 
 | Method | Endpoint          | Description           |
 | ------ | ----------------- | --------------------- |
-| GET    | `/notifications/` | Get all notifications |
+| GET    | `http://127.0.0.1:8000/notifications/` | Get all notifications |
 
 ## Use Cases
 
