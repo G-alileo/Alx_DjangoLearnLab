@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions
-from .models import Post, Comment
+from rest_framework import viewsets, permissions, status
+from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from django.shortcuts import get_object_or_404
+from notifications.models import Notification
 
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
@@ -36,3 +38,35 @@ def user_feed(request):
     posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+    if not created:
+        return Response({"detail": "You already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Create a notification for the post owner
+    if request.user != post.author:
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb="liked your post",
+            target=post
+        )
+
+    return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def unlike_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    like = Like.objects.filter(user=request.user, post=post)
+
+    if like.exists():
+        like.delete()
+        return Response({"detail": "Post unliked successfully."}, status=status.HTTP_200_OK)
+    
+    return Response({"detail": "You have not liked this post."}, status=status.HTTP_400_BAD_REQUEST)
