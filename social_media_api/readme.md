@@ -19,7 +19,7 @@ This is a RESTful API built with Django and Django REST Framework (DRF) that pro
 - Python
 - Django
 - Django REST Framework
-- PostgreSQL (Database)
+<!-- - PostgreSQL (Database) -->
 - Token Authentication
 
 ## Installation & Setup
